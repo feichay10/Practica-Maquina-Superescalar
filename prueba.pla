@@ -1,0 +1,8 @@
+ADDI R8 R0 #10
+ADDI R10 R0 #16
+LOOP: 
+  LW R7 41(R1) //Cargo de memoria - Rd = MEM[41+0]
+  ADD R7 R7 R8
+  SW R7 41(R1) //Guardo en memoria - MEM[Rd + Inm] = Ro
+  ADDI R1 R1 #1 //i++
+  BNE R1 R10 LOOP

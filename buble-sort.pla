@@ -1,0 +1,32 @@
+
+// Autor: Cheuk Kelly Ng Pante
+// Asignatura: Arquitectura de Computadores
+// Practica SIMDE - Maquina Superescalar
+// #############################################################################
+// Codigo en C++ del Algoritmo Bubble Sort:
+// for(int i = 0; i < vector.size(); i++) { recorre el vector
+//   for(int j = 0; j < (vector.size() - i); j++) { coge cada elemento del vector
+//       if(arreglo[j] > arreglo[j+1]){
+//         aux = arreglo[j];
+//         arreglo[j] = arreglo[j + 1];
+//         arreglo[j + 1] = aux;
+//       }
+//   }
+//}
+
+15
+ADDI R8 R0 #0             // Vector en posicion 41, mejor poner cero y en los LW sumarle 41 y 42
+LW R10 40(R8)             // Tam del vector, en R10 = 16; LW Rd, Inm(Ro) --> Rd = MEM[Ro + Inm]
+LOOP: LW R5 (R0)          // j = 0
+      LW R8 (R0)          // Reiniciamos las posiciones de memoria
+LOOP2: SUB R11 R10 R1     // vector.size() - 1
+  LW R3 41(R8)            // Cargo en R3 el contenido de la posicion de memoria [41], Rd = MEM[40+0], R1 = 0 --> j
+  LW R4 42(R8)            // Cargo en R4 el contenido de la posicion de memoria [42], Rd = MEM[41+0], R1 = 0 --> j + 1
+  BGT R4 R3 NOSWAP        // if(arreglo[j] < arreglo[j+1])
+  SW R4 41(R8)            // arreglo[j] = arreglo[j + 1]; SW Ro, Inm(Rd) --> MEM[Rd + Inm] = Ro --> En la pos R8 (41) guardo lo que hay en R4
+  SW R3 42(R8)            // arreglo[j + 1] = arreglo[j]; SW Ro, Inm(Rd) --> MEM[Rd + Inm] = Ro --> En la pos R8 (42) guardo lo que hay en R3
+NOSWAP:ADDI R5 R5 #1      // j++
+  ADDI R8 R8 #1           // Incrementa una posicion de memoria + 1
+  BGT R11 R5 LOOP2        // vector.size - 1 > j 
+  ADDI R1 R1 #1           // R1 = R1 + 1 --> i++
+  BNE R1 R10 LOOP         // Si R1 != R10 salta a LOOP, i <= 16, si i == 16 sale fuera, termina
