@@ -30,16 +30,13 @@ int main(void) {
   }
   std::cout << "\n";
 
-  for (int i = 0; i < vector.size(); i++) {  // recorre el vector
-    std::cout << "##########i -> " << i << "\n";
-    for (int j = 0; j < (vector.size() - i); j++) {  // coge cada elemento del vector
+  for (int i = 0; i < vector.size(); i++) {  
+    for (int j = 0; j < (vector.size() - i); j++) {  
       if (vector[j] > vector[j + 1]) {
         aux = vector[j];
         vector[j] = vector[j + 1];
         vector[j + 1] = aux;
-        //std::cout << "swap -> " << vector[j] << std::endl;
       }
-      std::cout << "2 for -> " << vector[j] << std::endl;
     }
   }
 
